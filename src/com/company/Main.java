@@ -11,7 +11,7 @@ public class Main {
         Scanner kbInput = new Scanner(System.in);
 
         int maxIndex1 = -1;
-        int maxIndex2 = -1;
+        int maxIndex2;
         boolean b = true;
         boolean bb;
         int numA = 0;
@@ -21,41 +21,51 @@ public class Main {
         int numF = 0;
         String response;
         double totalGrades = 0;
-        int grade[] = new int[1000];
-        int absence[] = new int[1000];
-        String fName[] = new String[1000];
-        String lName[] = new String[1000];
-        String g[] = new String[1000];
-        String a[] = new String[1000];
+        String array[] = new String[26];
+        int grade[] = new int[5000];
+        int absence[] = new int[5000];
+        String fName[] = new String[5000];
+        String lName[] = new String[5000];
+        String g[] = new String[5000];
+        String a[] = new String[5000];
+        String text[];
 
-        while (maxIndex1 < 24)
+        while (fileScanner.hasNext())
         {
             maxIndex1++;
-            fName[maxIndex1] = "" + fileScanner.next();
-            lName[maxIndex1] = "" + fileScanner.next();
-            g[maxIndex1] = "" + fileScanner.next();
-            a[maxIndex1] = "" + fileScanner.next();
-            g[maxIndex1] = g[maxIndex1].substring(0, g[maxIndex1].length() - 1);
-            grade[maxIndex1] = Integer.parseInt(g[maxIndex1]);
-            absence[maxIndex1] = Integer.parseInt(a[maxIndex1]);
-            totalGrades += grade[maxIndex1];
+            array[maxIndex1] = fileScanner.nextLine();
+        }
 
-            if (grade[maxIndex1] >= 90)
+        fileScanner.close();
+
+        for (int i = 1; i < array.length - 5; i++) {
+            text = array[i].split("\t");
+            fName[i] = text[0];
+            lName[i] = text[1];
+            g[i] = text[2];
+            a[i] = text[3];
+
+            g[i] = g[i].substring(0, g[i].length() - 1);
+            grade[i] = Integer.parseInt(g[i]);
+            absence[i] = Integer.parseInt(a[i]);
+            totalGrades += grade[i];
+
+            if (grade[i] >= 90)
             {
                 numA++;
             }
 
-            else if (grade[maxIndex1] >= 80)
+            else if (grade[i] >= 80)
             {
                 numB++;
             }
 
-            else if (grade[maxIndex1] >= 70)
+            else if (grade[i] >= 70)
             {
                 numC++;
             }
 
-            else if (grade[maxIndex1] >= 60)
+            else if (grade[i] >= 60)
             {
                 numD++;
             }
@@ -65,8 +75,6 @@ public class Main {
                 numF++;
             }
         }
-
-        fileScanner.close();
 
         System.out.println("Class Average: " + totalGrades / 25 + "%\n");
         System.out.println(numA + " students got A's.");
